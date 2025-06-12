@@ -1,7 +1,7 @@
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
-  const response = await fetch(`/api/restaurants`);
-  const restaurants = await response.json();
+  const response = await fetch(`/api/owners/restaurants`);
+  const ownedRestaurants = await response.json();
 
-  return { restaurants };
+  return { ownedRestaurants };
 }

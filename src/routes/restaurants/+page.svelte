@@ -3,10 +3,12 @@
   /** @type {import('./$types').PageProps} */
 
   let { data } = $props();
+
+  console.log(data);
 </script>
 
 <div class="grid grid-cols-4 gap-10">
-  {#each data.restaurants.data as restaurant}
+  {#each data.ownedRestaurants.data as restaurant}
     <Restaurant {restaurant} />
   {/each}
 </div>
