@@ -2,16 +2,12 @@
   let { orderItem } = $props();
 </script>
 
-<div
-  class="border border-gray-500 flex p-5 rounded-xl gap-5 hover:shadow-xl transition"
->
+<div class="flex justify-between">
+  <div class="flex gap-5">
+    <p>{orderItem.imageUrlAtOrder}</p>
+    <h2>{orderItem.nameAtOrder}</h2>
+  </div>
   <div>
-    <div class="flex gap-5">
-      <p>{orderItem.imageUrlAtOrder}</p>
-      <div class="text-end">
-        <h2>{orderItem.nameAtOrder}</h2>
-        <p>{orderItem.priceAtOrder}</p>
-      </div>
-    </div>
+    <p>{orderItem.priceAtOrder}</p>
   </div>
 </div>

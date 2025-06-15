@@ -18,23 +18,44 @@
   }
 </script>
 
-<div class="border border-gray-500 flex p-5 rounded-xl gap-5">
+<div class="border border-gray-500 p-5 space-y-5 rounded-xl gap-5">
+  <div class="flex justify-between">
+    <h2># {order.id}</h2>
+    <p>{formatDateTime(order.orderDate)}</p>
+  </div>
   <div class="space-y-5">
-    <div class="grid grid-cols-3">
+    <div>
       {#each order.OrderItem as orderItem}
         <OrderItem {orderItem} />
       {/each}
     </div>
-    <p>Status : {order.OrderStatus.name}</p>
-    <p>Date : {formatDateTime(order.orderDate)}</p>
-    <div>
-      <h2>Participants :</h2>
-      <ul class="list-disc list-inside">
-        {#each order.orderParticipants as orderParticipant}
-          <li>{orderParticipant.User.name}</li>
-        {/each}
-      </ul>
+
+    <hr />
+    <div class="flex">
+      <p class="text-nowrap">Total :</p>
+      <p class="text-end w-full">{order.totalPrice} €</p>
     </div>
-    <p>{order.totalPrice} €</p>
   </div>
+
+  <hr />
+
+  <fieldset>
+    <legend>Status : </legend>
+
+    <div>
+      <input type="radio" id="Pending" name="drone" value="huey" checked />
+      <label for="Pending">Pending</label>
+    </div>
+
+    <div>
+      <input type="radio" id="dewey" name="drone" value="dewey" />
+      <label for="dewey">Dewey</label>
+    </div>
+
+    <div>
+      <input type="radio" id="louie" name="drone" value="louie" />
+      <label for="louie">Louie</label>
+    </div>
+  </fieldset>
+  <p>Status : {order.OrderStatus.name}</p>
 </div>

@@ -5,7 +5,7 @@
 </script>
 
 <a
-  href={`/restaurants/${restaurant.name}/${restaurant.id}`}
+  href={`/restaurants/${restaurant.name}/${restaurant.id}/orders`}
   class="border border-gray-100 shadow-xl overflow-hidden rounded-2xl p-5 w-full flex flex-col gap-5 hover:scale-105 transition ease-in-out duration-200"
 >
   <enhanced:img src={Logo} alt="Restaurant logo" class="object-cover" />
