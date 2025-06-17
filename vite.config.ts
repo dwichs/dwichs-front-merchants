@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [tailwindcss(), enhancedImages(), , sveltekit()],
   server: {
+    host: true,
     proxy: {
       "/api": {
         target: "http://localhost:3000",
