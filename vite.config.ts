@@ -5,6 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [tailwindcss(), enhancedImages(), , sveltekit()],
+  preview: {
+    host: true,
+  },
   server: {
     host: true,
     proxy: {
