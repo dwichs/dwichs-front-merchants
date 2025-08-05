@@ -1,3 +1,3 @@
-import { TEST_VARIABLE } from "$env/dynamic/private";
+import { env } from "$env/dynamic/private";
 
-console.log(TEST_VARIABLE);
+console.log(env.PASSPHRASE);
