@@ -1,14 +1,6 @@
-import { browser } from "$app/environment";
-import {
-  PUBLIC_API_BASE_CLIENT,
-  PUBLIC_API_BASE_SERVER,
-} from "$env/static/public";
-
-console.log(browser);
+import { PUBLIC_API_BASE_CLIENT } from "$env/static/public";
 
 export const load = async ({ fetch }) => {
-  const API_BASE = browser ? PUBLIC_API_BASE_CLIENT : PUBLIC_API_BASE_SERVER;
-
-  const res = await fetch(`${API_BASE}/data`);
+  const res = await fetch(`${PUBLIC_API_BASE_CLIENT}/data`);
   return { data: await res.json() };
 };
