@@ -5,4 +5,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [tailwindcss(), enhancedImages(), , sveltekit()],
+  server: {
+    port: 5174,
+    strictPort: false,
+  },
+  preview: {
+    port: 5174,
+    strictPort: false,
+  },
 });
