@@ -2,13 +2,14 @@ name: dwichs-front-merchants
 services:
   dwichs-front-merchants:
     container_name: dwichs-front-merchants
+    hostname: dwichs-front-merchants
     build:
       context: .
       dockerfile: Dockerfile.prod
     env_file:
       - .env.production
     ports:
-      - "5174:3000"
+      - "5174:5174"
     networks:
       - dwichs
 
