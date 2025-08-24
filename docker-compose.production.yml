@@ -8,11 +8,16 @@ services:
       dockerfile: Dockerfile.production
     env_file:
       - .env
-    ports:
-      - "5174:5174"
+    expose:
+      - 5174
     networks:
-      - dwichs
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=Host(`merchants.karitchi.com`)
+      - traefik.http.routers.frontend.entrypoints=web
+      - traefik.http.services.frontend.loadbalancer.server.port=5174
 
 networks:
-  dwichs:
-    name: dwichs
+  dokploy-network:
+    external: true
