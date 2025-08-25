@@ -13,10 +13,11 @@ services:
     networks:
       - dokploy-network
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`merchants.karitchi.com`)
-      - traefik.http.routers.frontend.entrypoints=web
-      - traefik.http.services.frontend.loadbalancer.server.port=5174
+      - "traefik.enable=true"
+      - "traefik.http.routers.merchants.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.merchants.entrypoints=websecure"
+      - "traefik.http.routers.merchants.tls.certResolver=letsencrypt"
+      - "traefik.http.services.merchants.loadbalancer.server.port=5174"
 
 networks:
   dokploy-network:
