@@ -14,7 +14,7 @@ services:
       - dokploy-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.merchants.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.merchants.rule=Host(`merchants.karitchi.com`)"
       - "traefik.http.routers.merchants.entrypoints=websecure"
       - "traefik.http.routers.merchants.tls.certResolver=letsencrypt"
       - "traefik.http.services.merchants.loadbalancer.server.port=5174"
