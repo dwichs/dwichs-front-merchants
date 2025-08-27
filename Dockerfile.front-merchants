@@ -5,4 +5,5 @@ RUN npm install
 COPY ./src /app/src
 COPY ./static /app/static
 COPY ./vite.config.ts /app/vite.config.ts
+COPY ./.env /app/.env
 CMD npm run dev

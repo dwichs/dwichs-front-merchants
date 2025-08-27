@@ -8,8 +8,12 @@ services:
     hostname: dwichs-front-merchants
     restart: unless-stopped
     command: npm run dev
+    env_file:
+      - .env
     ports:
       - 5174:5174
+    networks:
+      - dwichs
     develop:
       watch:
         - action: sync
@@ -27,3 +31,10 @@ services:
         - action: rebuild
           path: vite.config.ts
           target: /app
+
+        - action: rebuild
+          path: .env
+          target: /app
+
+networks:
+  dwichs:
