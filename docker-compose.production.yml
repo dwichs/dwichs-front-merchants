@@ -1,24 +1,12 @@
-name: dwichs-front-merchants
 services:
-  dwichs-front-merchants:
-    container_name: dwichs-front-merchants
+  front-merchants:
+    image: dwichs-front-merchants:latest
     hostname: dwichs-front-merchants
-    build:
-      context: .
-      dockerfile: Dockerfile.production
-    env_file:
-      - .env
-    expose:
-      - 5174
     networks:
-      - dokploy-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.merchants.rule=Host(`merchants.karitchi.com`)"
-      - "traefik.http.routers.merchants.entrypoints=websecure"
-      - "traefik.http.routers.merchants.tls.certResolver=letsencrypt"
-      - "traefik.http.services.merchants.loadbalancer.server.port=5174"
+      - dwichs
 
 networks:
-  dokploy-network:
-    external: true
+  dwichs:
+    name: dwichs
+    driver: overlay
+    attachable: true
