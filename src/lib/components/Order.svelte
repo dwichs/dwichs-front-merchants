@@ -1,5 +1,17 @@
 <script>
   let { order } = $props();
+
+  const statuses = [
+    { name: "Pending" },
+    { name: "Ready for Pickup" },
+    { name: "Picked Up" },
+    { name: "Cancelled" },
+  ];
+
+  async function updateStatus(newStatus) {
+    // Add your API call here to update the order status
+    console.log(`Updating order ${order.id} to ${newStatus}`);
+  }
 </script>
 
 <div class="border border-gray-300 rounded-xl p-4">
@@ -10,16 +22,16 @@
         {new Date(order.date).toLocaleString("fr-FR")}
       </p>
     </div>
-    <div
-      class="rounded-xl p-2 h-min
-  {order.status === 'pending'
-        ? 'bg-yellow-200'
-        : order.status === 'completed'
-          ? 'bg-green-200'
-          : 'bg-gray-200'}"
+
+    <select
+      value={order.status}
+      onchange={(e) => updateStatus(e.target.value)}
+      class="h-min cursor-pointer"
     >
-      {order.status}
-    </div>
+      {#each statuses as status}
+        <option value={status.name}>{status.name}</option>
+      {/each}
+    </select>
   </div>
   <ul class="space-y-2 list-disc pl-6">
     {#each order.items as item}
@@ -37,7 +49,7 @@
     {/each}
   </ul>
   <div class="border-t pt-2 mt-3">
-    <div class="flex justify-between text-lg">
+    <div class="flex justify-between text-lg font-sem">
       <span>Total:</span>
       <span>${order.totalPrice}</span>
     </div>
