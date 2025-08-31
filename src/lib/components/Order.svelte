@@ -1,61 +1,77 @@
 <script>
-  import OrderItem from "$lib/components/OrderItem.svelte";
+  import { PUBLIC_API_BASE_CLIENT } from "$env/static/public";
   let { order } = $props();
 
-  function formatDateTime(isoString) {
-    const d = new Date(isoString);
+  const statuses = [
+    { name: "Pending" },
+    { name: "Ready for Pickup" },
+    { name: "Picked Up" },
+    { name: "Cancelled" },
+  ];
 
-    const pad = (n) => n.toString().padStart(2, "0");
+  async function updateStatus(newStatus) {
+    try {
+      const response = await fetch(
+        `${PUBLIC_API_BASE_CLIENT}/orders/${order.id}/status`,
+        {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        },
+      );
 
-    const day = pad(d.getDate());
-    const month = pad(d.getMonth() + 1); // Months are zero‑based
-    const year = d.getFullYear();
-
-    const hours = pad(d.getHours());
-    const minutes = pad(d.getMinutes());
-
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
+      if (response.ok) {
+        order.status = newStatus; // Update local state
+      } else {
+        console.error("Failed to update status");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   }
 </script>
 
-<div class="border border-gray-500 p-5 space-y-5 rounded-xl gap-5">
-  <div class="flex justify-between">
-    <h2># {order.id}</h2>
-    <p>{formatDateTime(order.orderDate)}</p>
-  </div>
-  <div class="space-y-5">
+<div class="border border-gray-300 rounded-xl p-4">
+  <div class="flex justify-between border-b pb-2 mb-3">
     <div>
-      {#each order.OrderItem as orderItem}
-        <OrderItem {orderItem} />
+      <h3 class="text-xl">Order #{order.id}</h3>
+      <p class="text-sm text-gray-600">
+        {new Date(order.date).toLocaleString("fr-FR")}
+      </p>
+    </div>
+
+    <select
+      value={order.status}
+      onchange={(e) => updateStatus(e.target.value)}
+      class="h-min cursor-pointer"
+    >
+      {#each statuses as status}
+        <option value={status.name}>{status.name}</option>
       {/each}
-    </div>
-
-    <hr />
-    <div class="flex">
-      <p class="text-nowrap">Total :</p>
-      <p class="text-end w-full">{order.totalPrice} €</p>
+    </select>
+  </div>
+  <ul class="space-y-2 list-disc pl-6">
+    {#each order.items as item}
+      <li>
+        <div class="flex justify-between">
+          <div>
+            <span>{item.name}</span>
+            {#if item.specialRequest}
+              <div class="text-sm text-gray-600">{item.specialRequest}</div>
+            {/if}
+          </div>
+          <span>${item.price}</span>
+        </div>
+      </li>
+    {/each}
+  </ul>
+  <div class="border-t pt-2 mt-3">
+    <div class="flex justify-between text-lg font-sem">
+      <span>Total:</span>
+      <span>${order.totalPrice}</span>
     </div>
   </div>
-
-  <hr />
-
-  <fieldset>
-    <legend>Status : </legend>
-
-    <div>
-      <input type="radio" id="Pending" name="drone" value="huey" checked />
-      <label for="Pending">Pending</label>
-    </div>
-
-    <div>
-      <input type="radio" id="dewey" name="drone" value="dewey" />
-      <label for="dewey">Dewey</label>
-    </div>
-
-    <div>
-      <input type="radio" id="louie" name="drone" value="louie" />
-      <label for="louie">Louie</label>
-    </div>
-  </fieldset>
-  <p>Status : {order.OrderStatus.name}</p>
 </div>
