@@ -1,4 +1,5 @@
 <script>
+  import { PUBLIC_API_BASE_CLIENT } from "$env/static/public";
   let { order } = $props();
 
   const statuses = [
@@ -9,8 +10,27 @@
   ];
 
   async function updateStatus(newStatus) {
-    // Add your API call here to update the order status
-    console.log(`Updating order ${order.id} to ${newStatus}`);
+    try {
+      const response = await fetch(
+        `${PUBLIC_API_BASE_CLIENT}/orders/${order.id}/status`,
+        {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        },
+      );
+
+      if (response.ok) {
+        order.status = newStatus; // Update local state
+      } else {
+        console.error("Failed to update status");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   }
 </script>
 
