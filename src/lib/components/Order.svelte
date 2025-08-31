@@ -1,61 +1,45 @@
 <script>
-  import OrderItem from "$lib/components/OrderItem.svelte";
   let { order } = $props();
-
-  function formatDateTime(isoString) {
-    const d = new Date(isoString);
-
-    const pad = (n) => n.toString().padStart(2, "0");
-
-    const day = pad(d.getDate());
-    const month = pad(d.getMonth() + 1); // Months are zero‑based
-    const year = d.getFullYear();
-
-    const hours = pad(d.getHours());
-    const minutes = pad(d.getMinutes());
-
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  }
 </script>
 
-<div class="border border-gray-500 p-5 space-y-5 rounded-xl gap-5">
-  <div class="flex justify-between">
-    <h2># {order.id}</h2>
-    <p>{formatDateTime(order.orderDate)}</p>
+<div class="border border-gray-300 rounded-xl p-4">
+  <div class="flex justify-between border-b pb-2 mb-3">
+    <div>
+      <h3 class="text-xl">Order #{order.id}</h3>
+      <p class="text-sm text-gray-600">
+        {new Date(order.date).toLocaleString("fr-FR")}
+      </p>
+    </div>
+    <div
+      class="rounded-xl p-2 h-min
+  {order.status === 'pending'
+        ? 'bg-yellow-200'
+        : order.status === 'completed'
+          ? 'bg-green-200'
+          : 'bg-gray-200'}"
+    >
+      {order.status}
+    </div>
   </div>
-  <div class="space-y-5">
-    <div>
-      {#each order.OrderItem as orderItem}
-        <OrderItem {orderItem} />
-      {/each}
-    </div>
-
-    <hr />
-    <div class="flex">
-      <p class="text-nowrap">Total :</p>
-      <p class="text-end w-full">{order.totalPrice} €</p>
+  <ul class="space-y-2 list-disc pl-6">
+    {#each order.items as item}
+      <li>
+        <div class="flex justify-between">
+          <div>
+            <span>{item.name}</span>
+            {#if item.specialRequest}
+              <div class="text-sm text-gray-600">{item.specialRequest}</div>
+            {/if}
+          </div>
+          <span>${item.price}</span>
+        </div>
+      </li>
+    {/each}
+  </ul>
+  <div class="border-t pt-2 mt-3">
+    <div class="flex justify-between text-lg">
+      <span>Total:</span>
+      <span>${order.totalPrice}</span>
     </div>
   </div>
-
-  <hr />
-
-  <fieldset>
-    <legend>Status : </legend>
-
-    <div>
-      <input type="radio" id="Pending" name="drone" value="huey" checked />
-      <label for="Pending">Pending</label>
-    </div>
-
-    <div>
-      <input type="radio" id="dewey" name="drone" value="dewey" />
-      <label for="dewey">Dewey</label>
-    </div>
-
-    <div>
-      <input type="radio" id="louie" name="drone" value="louie" />
-      <label for="louie">Louie</label>
-    </div>
-  </fieldset>
-  <p>Status : {order.OrderStatus.name}</p>
 </div>

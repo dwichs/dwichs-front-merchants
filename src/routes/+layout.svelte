@@ -14,7 +14,7 @@
   />
 </svelte:head>
 
-<div class="max-w-7xl mx-auto w-full space-y-10 font-display">
+<div class="max-w-7xl mx-auto w-full space-y-10 font-display pb-10">
   {#if !noTopBarRoutes.includes(page.url.pathname)}
     <Header />
   {/if}
