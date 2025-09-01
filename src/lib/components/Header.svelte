@@ -26,18 +26,18 @@
   });
 </script>
 
-<div class="flex justify-center p-5">
+<div class="flex justify-between items-center p-3 sm:p-5">
   <Title />
-  <div class="absolute flex gap-5 top-0 right-0 p-5 text-gray-800">
+  <div class="flex gap-2 sm:gap-5 text-gray-800">
     <div
       bind:this={dropdownRef}
-      class=" relative rounded border border-gray-300 shadow flex items-center justify-between gap-2 z-10"
+      class="relative rounded border border-gray-300 shadow flex items-center justify-between gap-2 z-10"
     >
       <button
         onclick={() => (isOpen = !isOpen)}
-        class="cursor-pointer p-3 flex gap-2 items-center justify-between"
+        class="cursor-pointer p-2 sm:p-3 flex gap-2 items-center justify-between"
       >
-        <span> Menu </span>
+        <span class="hidden sm:inline"> Menu </span>
         <span class="material-symbols-outlined"> menu </span>
       </button>
       {#if isOpen}
