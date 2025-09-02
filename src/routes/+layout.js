@@ -13,7 +13,8 @@ export async function load({ fetch, url }) {
 
   if (!res.ok) {
     // If groups call fails and we're not on sign-in, redirect
-    if (browser && url.pathname !== "/sign-in") {
+    const publicRoutes = ["/sign-in", "/sign-up"];
+    if (browser && !publicRoutes.includes(url.pathname)) {
       throw redirect(302, "/sign-in");
     }
     console.error(`Failed to fetch groups: ${res.status}`);
